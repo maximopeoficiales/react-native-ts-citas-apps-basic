@@ -34,9 +34,9 @@ const Formulario = (props: MyProps) => {
     telefono: '',
   });
   let {id, paciente, propietario, telefono, fecha, hora, sintomas} = cita;
-  useEffect(() => {
-    console.log(cita);
-  }, [cita]);
+  // useEffect(() => {
+  //   console.log(cita);
+  // }, [cita]);
   const handlerSubmit = () => {
     // validacion
     if (
