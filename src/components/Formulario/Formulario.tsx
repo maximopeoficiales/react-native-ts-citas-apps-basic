@@ -9,10 +9,10 @@ const Formulario = (props: MyProps) => {
   props = {...defaultProps, ...props};
   const {} = props;
 
-  const handlerConfirmPickerDate = (date: Date) => {
-    console.log(date.getFullYear());
+  const handlerConfirmPickerDate = (date: string) => {
+    // console.log(date.getFullYear());
   };
-  const handlerConfirmPickerTime = (date: Date) => {
+  const handlerConfirmPickerTime = (date: string) => {
     console.log(date);
   };
 
@@ -32,19 +32,24 @@ const Formulario = (props: MyProps) => {
           <Text style={styles.label}>Telefono Contacto:</Text>
           <TextInput style={styles.input} keyboardType="numeric" />
         </View>
-        <View>
+        {/* <View>
           <Text style={styles.label}>Sintomas:</Text>
           <TextInput style={styles.input} multiline />
-        </View>
+        </View> */}
         <DatePicker
+          textLabel="Fecha:"
           mode="date"
           titleButton="Seleccionar la fecha"
           handlerConfirmPicker={handlerConfirmPickerDate}
+          headerTextIOS={'Elije la fecha'}
         />
         <DatePicker
+          textLabel="Hora:"
           mode="time"
           titleButton="Seleccionar la hora"
           handlerConfirmPicker={handlerConfirmPickerTime}
+          headerTextIOS={'Elije la hora'}
+          isTime={true}
         />
       </View>
     </>
