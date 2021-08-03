@@ -1,15 +1,17 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 interface MyProps {}
 const defaultProps: MyProps = {};
 const TemplateName = (props: MyProps) => {
   props = {...defaultProps, ...props};
-
+  const {} = props;
   return (
     <View>
       <Text>TemplateName</Text>
     </View>
   );
 };
-
+const styles = StyleSheet.create({
+  
+});
 export default TemplateName;

@@ -1,13 +1,19 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Button, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
 import {Cita} from '../../interfaces/Cita';
 interface MyProps {
-  cita: Cita; //
+  cita: Cita;
+  eliminarPaciente(cita: Cita): void; //
 }
 const defaultProps = {};
 const CitaItem = (props: MyProps) => {
   props = {...defaultProps, ...props};
-  const {cita} = props;
+  const {cita, eliminarPaciente} = props;
+
+  const handlerPressEliminar = (cita: Cita) => {
+    eliminarPaciente(cita);
+  };
+
   return (
     <View style={styles.cita}>
       <View>
@@ -21,6 +27,18 @@ const CitaItem = (props: MyProps) => {
       <View>
         <Text style={styles.label}>Sintomas:</Text>
         <Text style={styles.texto}>{cita.sintomas}</Text>
+      </View>
+      {/* no se le puede dar estilo */}
+      {/* <Button title="Eliminar" onPress={() => {}} /> */}
+
+      <View>
+        <TouchableHighlight
+          onPress={() => {
+            handlerPressEliminar(cita);
+          }}
+          style={styles.btnEliminar}>
+          <Text style={styles.txtBtnEliminar}>Eliminar &times;</Text>
+        </TouchableHighlight>
       </View>
     </View>
   );
@@ -36,7 +54,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 20,
     marginVertical: 5,
-    marginHorizontal: 10,
+    marginHorizontal: '2.5%',
   },
   label: {
     fontWeight: 'bold',
@@ -45,6 +63,17 @@ const styles = StyleSheet.create({
   },
   texto: {
     fontSize: 18,
+  },
+  btnEliminar: {
+    padding: 10,
+    backgroundColor: 'red',
+    marginVertical: 10,
+    borderRadius: 10,
+  },
+  txtBtnEliminar: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 export default CitaItem;
