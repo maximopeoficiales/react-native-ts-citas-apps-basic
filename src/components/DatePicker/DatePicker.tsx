@@ -10,7 +10,7 @@ interface MyProps {
   headerTextIOS: string;
   cancelTextIOS?: string;
   confirmTextIOS?: string;
-  handlerConfirmPicker(date: string): void;
+  handlerConfirmPicker(text: string, date: Date): void;
   is24Hour?: boolean;
   isTime?: boolean;
 }
@@ -63,6 +63,7 @@ const DatePicker = (props: MyProps) => {
       };
       const fecha = date.toLocaleDateString('es-ES', options);
       setDateCurrent(fecha);
+      handlerConfirmPicker(fecha, date);
     } else {
       const options: Intl.DateTimeFormatOptions = {
         hour: 'numeric',
@@ -71,9 +72,9 @@ const DatePicker = (props: MyProps) => {
       };
       const hora = date.toLocaleTimeString('es-ES', options);
       setDateCurrent(hora);
+      handlerConfirmPicker(hora, date);
     }
 
-    handlerConfirmPicker(dateCurrent);
     hideDatePicker();
   };
 

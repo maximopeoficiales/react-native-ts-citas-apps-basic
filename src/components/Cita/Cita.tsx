@@ -17,6 +17,10 @@ const CitaItem = (props: MyProps) => {
   return (
     <View style={styles.cita}>
       <View>
+        <Text style={styles.label}>ID:</Text>
+        <Text style={styles.texto}>{cita.id}</Text>
+      </View>
+      <View>
         <Text style={styles.label}>Paciente:</Text>
         <Text style={styles.texto}>{cita.paciente}</Text>
       </View>
@@ -27,6 +31,14 @@ const CitaItem = (props: MyProps) => {
       <View>
         <Text style={styles.label}>Sintomas:</Text>
         <Text style={styles.texto}>{cita.sintomas}</Text>
+      </View>
+      <View>
+        <Text style={styles.label}>Fecha:</Text>
+        <Text style={styles.texto}>{cita.fecha}</Text>
+      </View>
+      <View>
+        <Text style={styles.label}>Hora:</Text>
+        <Text style={styles.texto}>{cita.hora}</Text>
       </View>
       {/* no se le puede dar estilo */}
       {/* <Button title="Eliminar" onPress={() => {}} /> */}
@@ -54,7 +66,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 20,
     marginVertical: 5,
-    marginHorizontal: '2.5%',
   },
   label: {
     fontWeight: 'bold',

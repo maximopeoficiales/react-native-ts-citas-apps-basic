@@ -1,41 +1,117 @@
-import React, {useState} from 'react';
-import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  Alert,
+  Button,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableHighlight,
+  View,
+} from 'react-native';
+import {useForm} from '../../hooks/useForm';
+import {Cita} from '../../interfaces/Cita';
 import DatePicker from '../DatePicker/DatePicker';
-
-interface MyProps {}
-const defaultProps: MyProps = {};
+import ButtonPurple from '../shared/ButtonPurple/ButtonPurple';
+import shortid from 'shortid';
+interface MyProps {
+  saveCita(cita: Cita): void;
+  hiddenForm(): void;
+}
+const defaultProps = {};
 
 const Formulario = (props: MyProps) => {
   props = {...defaultProps, ...props};
-  const {} = props;
+  const {saveCita, hiddenForm} = props;
 
-  const handlerConfirmPickerDate = (date: string) => {
-    // console.log(date.getFullYear());
+  let {formValues: cita, handlerChange} = useForm<Cita>({
+    id: shortid.generate(),
+    paciente: '',
+    fecha: '',
+    hora: '',
+    propietario: '',
+    sintomas: '',
+    telefono: '',
+  });
+  let {id, paciente, propietario, telefono, fecha, hora, sintomas} = cita;
+  useEffect(() => {
+    console.log(cita);
+  }, [cita]);
+  const handlerSubmit = () => {
+    // validacion
+    if (
+      paciente.trim() === '' ||
+      propietario.trim() === '' ||
+      telefono.trim() === '' ||
+      fecha.trim() === '' ||
+      hora.trim() === '' ||
+      sintomas.trim() === ''
+    ) {
+      showAlert();
+    } else {
+      // paso la validacion
+      // console.log(cita);
+      saveCita(cita);
+      id = shortid.generate();
+      hiddenForm();
+    }
   };
-  const handlerConfirmPickerTime = (date: string) => {
-    console.log(date);
+  const showAlert = () => {
+    Alert.alert('Error', 'Todos los campos son obligatorios', [{text: 'Ok'}]);
+  };
+  const handlerConfirmPickerDate = (text: string, date: Date) => {
+    handlerChange('fecha', text);
+  };
+  const handlerConfirmPickerTime = (text: string, date: Date) => {
+    handlerChange('hora', text);
   };
 
   return (
     <>
-      <View style={styles.formulario}>
-        {/* <Text>Formulario</Text> */}
+      <ScrollView style={styles.formulario}>
+        <Text style={styles.title}>Crea una Cita</Text>
         <View>
           <Text style={styles.label}>Paciente:</Text>
-          <TextInput style={styles.input} />
+          <TextInput
+            style={styles.input}
+            value={paciente}
+            onChangeText={text => {
+              handlerChange('paciente', text);
+            }}
+          />
         </View>
         <View>
           <Text style={styles.label}>Dueño:</Text>
-          <TextInput style={styles.input} />
+          <TextInput
+            style={styles.input}
+            value={propietario}
+            onChangeText={text => {
+              handlerChange('propietario', text);
+            }}
+          />
         </View>
         <View>
           <Text style={styles.label}>Telefono Contacto:</Text>
-          <TextInput style={styles.input} keyboardType="numeric" />
+          <TextInput
+            style={styles.input}
+            keyboardType="numeric"
+            value={telefono}
+            onChangeText={text => {
+              handlerChange('telefono', text);
+            }}
+          />
         </View>
-        {/* <View>
+        <View>
           <Text style={styles.label}>Sintomas:</Text>
-          <TextInput style={styles.input} multiline />
-        </View> */}
+          <TextInput
+            style={styles.input}
+            multiline
+            value={sintomas}
+            onChangeText={text => {
+              handlerChange('sintomas', text);
+            }}
+          />
+        </View>
         <DatePicker
           textLabel="Fecha:"
           mode="date"
@@ -51,17 +127,22 @@ const Formulario = (props: MyProps) => {
           headerTextIOS={'Elije la hora'}
           isTime={true}
         />
-      </View>
+        <ButtonPurple textBtn="Crear Cita" onPress={handlerSubmit} />
+      </ScrollView>
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
   formulario: {
     backgroundColor: '#FFFFFF',
     paddingHorizontal: 20,
     paddingVertical: 10,
-    marginHorizontal: '2.5%',
     borderRadius: 15,
   },
   label: {
@@ -77,7 +158,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderRadius: 5,
     fontSize: 16,
-    marginBottom: 5,
+    // marginBottom: 5,
   },
 });
 export default Formulario;
