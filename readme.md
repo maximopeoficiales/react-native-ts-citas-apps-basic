@@ -12,4 +12,7 @@ npm:
 
 ## Proyecto Finalizado:
 
-![example](https://github.com/maximopeoficiales/react-native-flex-box/blob/main/screenshots/proyect.png?raw=true)
+![citas](https://github.com/maximopeoficiales/react-native-ts-citas-apps-basic/blob/main/screenshots/citas.png?raw=true)
+![example2](https://github.com/maximopeoficiales/react-native-ts-citas-apps-basic/blob/main/screenshots/datepickerdate.png?raw=true)
+![example2](https://github.com/maximopeoficiales/react-native-ts-citas-apps-basic/blob/main/screenshots/datepickertime.png?raw=true)
+![example2](https://github.com/maximopeoficiales/react-native-ts-citas-apps-basic/blob/main/screenshots/validacion.png?raw=true)
