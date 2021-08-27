@@ -1,5 +1,12 @@
 import React from 'react';
-import {Button, StyleSheet, Text, TouchableHighlight, View} from 'react-native';
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import {Cita} from '../../interfaces/Cita';
 interface MyProps {
   cita: Cita;
@@ -43,15 +50,13 @@ const CitaItem = (props: MyProps) => {
       {/* no se le puede dar estilo */}
       {/* <Button title="Eliminar" onPress={() => {}} /> */}
 
-      <View>
-        <TouchableHighlight
-          onPress={() => {
-            handlerPressEliminar(cita);
-          }}
-          style={styles.btnEliminar}>
-          <Text style={styles.txtBtnEliminar}>Eliminar &times;</Text>
-        </TouchableHighlight>
-      </View>
+      <TouchableHighlight
+        onPress={() => {
+          handlerPressEliminar(cita);
+        }}
+        style={styles.btnEliminar}>
+        <Text style={styles.txtBtnEliminar}>Eliminar &times;</Text>
+      </TouchableHighlight>
     </View>
   );
 };

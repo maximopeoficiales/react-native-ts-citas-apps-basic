@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   Keyboard,
@@ -13,34 +14,26 @@ import CitaItem from './src/components/Cita/Cita';
 import Formulario from './src/components/Formulario/Formulario';
 import ButtonPurple from './src/components/shared/ButtonPurple/ButtonPurple';
 import {Cita} from './src/interfaces/Cita';
+import {getCitasStorage, saveCitasStorage} from './src/utils/CitasStorage';
 
 const App = () => {
-  const [citas, setCitas] = useState([
-    {
-      id: '1',
-      paciente: 'maximo',
-      propietario: 'maximo junior',
-      sintomas: 'tiene hambre',
-    },
-    {
-      id: '2',
-      paciente: 'boby',
-      propietario: 'mayrin apaza',
-      sintomas: 'tiene hambre',
-    },
-    {
-      id: '3',
-      paciente: 'Native',
-      propietario: 'Chicho',
-      sintomas: 'Herida en la pata',
-    },
-  ] as Cita[]);
+  const [citas, setCitas] = useState<Cita[]>([]);
   const [showForm, setShowForm] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      setCitas((await getCitasStorage()) ?? []);
+    })();
+  }, []);
+
   const deleteCita = (cita: Cita) => {
-    setCitas(citasActuales => citasActuales.filter(e => e.id !== cita.id));
+    let citasFiltradas = citas.filter(e => e.id !== cita.id);
+    setCitas(citasFiltradas);
+    saveCitasStorage(citasFiltradas);
   };
   const saveCita = (cita: Cita) => {
     setCitas([...citas, cita]);
+    saveCitasStorage([...citas, cita]);
   };
   const hiddenForm = () => {
     setShowForm(!showForm);
@@ -51,7 +44,7 @@ const App = () => {
 
   return (
     <>
-      <TouchableWithoutFeedback onPress={hiddenKeyboard}>
+      {/* <TouchableWithoutFeedback onPress={hiddenKeyboard}> */}
         <View style={styles.container}>
           <Text style={styles.title}>Administrador de Citas</Text>
 
@@ -66,12 +59,12 @@ const App = () => {
                     ? 'Administra tus Citas'
                     : 'No hay citas :( , agrega una'}
                 </Text>
-
+                                    
                 <FlatList
                   style={styles.list}
                   data={citas}
                   renderItem={({item}) => (
-                    <CitaItem cita={item} eliminarPaciente={deleteCita} />
+                    <CitaItem cita={item} eliminarPaciente={deleteCita} key={item.id}/>
                   )}
                   keyExtractor={cita => cita.id.toString()}
                 />
@@ -79,7 +72,7 @@ const App = () => {
             )}
           </View>
         </View>
-      </TouchableWithoutFeedback>
+      {/* </TouchableWithoutFeedback> */}
     </>
   );
 };
@@ -101,7 +94,7 @@ const styles = StyleSheet.create({
   },
   list: {
     marginHorizontal: '2.5%',
-    flex: 1,
+    // flex: 1,
   },
 });
 
